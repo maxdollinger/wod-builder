@@ -3,7 +3,7 @@ const Workout = require('./workoutModel');
 
 const create = Model => data =>
      Model.create(data).then(doc => doc);
-const get = Model => (data = {}) =>
+const find = Model => (data = {}) =>
      Model.find(data).then(docs => docs.map(el => el.toObject()));
 const updateOne = Model => data =>
      Model.findByIdAndUpdate(data['_id'], data)
@@ -12,13 +12,12 @@ const deleteOne = Model => data => Model.findByIdAndDelete(data["_id"])
 
 const operations = {
      create: create,
-     getAll: get,
-     get: get,
+     find: find,
      updateOne: updateOne,
-     delete: deleteOne,
+     deleteOne: deleteOne,
 }
 
-const handler = name => operation => {
+const operationsFactory = name => operation => {
      switch (name) {
           default:
           case "Exercise":
@@ -27,4 +26,4 @@ const handler = name => operation => {
                return operations[operation](Workout);
      }
 }
-module.exports = handler;
+module.exports = operationsFactory;

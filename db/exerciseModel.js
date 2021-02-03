@@ -6,7 +6,6 @@ const exerciseSchema = new Schema({
     type: String,
     unique: true,
   },
-  rpm: Number,
   tags: [String],
   url: String,
   description: String,
