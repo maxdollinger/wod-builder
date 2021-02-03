@@ -1,0 +1,25 @@
+{
+  "name": "wodbuilder_api",
+  "version": "1.0.0",
+  "description": "api for wodbuilder app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxdollinger/wodbuilder-api.git"
+  },
+  "author": "Maximilian Dollinger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxdollinger/wodbuilder-api/issues"
+  },
+  "homepage": "https://github.com/maxdollinger/wodbuilder-api#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.14"
+  }
+}
