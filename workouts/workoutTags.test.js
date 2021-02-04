@@ -1,4 +1,4 @@
-const w = require('./workoutFactory');
+const workoutTags = require('./workoutTags');
 const workout = {
      name: '',
      type: '',
@@ -34,17 +34,17 @@ const workout = {
      ]
 }
 
-test('should return tags an flatten arr', () => {
-     const result = w.createTagsArr(workout.exercises[0])
-     expect(result).toEqual(['arms', 'lvl2', 'gymnastic','arms', 'lvl2', 'weightlifting','lvl1', 'gymnastic', 'box','lvl1', 'cardio', 'rower']);
+test('should return tags for workout', () => {
+     const tags = workoutTags(workout);
+     expect(tags).toEqual(['arms', 'lvl2', 'gymnastic', 'weightlifting', 'box', 'cardio', 'rower', 'medium']);
 })
 
-test('should filter duplicates', () => {
-     const result = w.filterDuplicateTags([1,1,2,3,2,1,4,5,4,5])
-     expect(result).toEqual([1,2,3,4,5]);
+test('should return tags for workout', () => {
+     const tags = workoutTags({...workout, time:[180,180], rest:[60,0]});
+     expect(tags).toEqual(['arms', 'lvl2', 'gymnastic', 'weightlifting', 'box', 'cardio', 'rower', 'short']);
 })
 
-test('should delete lower ranked', () => {
-     const result = w.filterItemsByOrder(['lvl3', 'lvl2', 'lvl1'])(['lvl3', 'lvl2', 'lvl1', 'weightlifting', 'lvl1', 'gymnastic']);
-     expect(result).toEqual(['lvl3', 'weightlifting', 'gymnastic']);
+test('should return tags for workout', () => {
+     const tags = workoutTags({...workout, time:[180,180], rest:[60,0], sections:[4,2]});
+     expect(tags).toEqual(['arms', 'lvl2', 'gymnastic', 'weightlifting', 'box', 'cardio', 'rower', 'long']);
 })

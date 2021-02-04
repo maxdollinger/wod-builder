@@ -1,10 +1,17 @@
 const express = require('express');
+const {res} = require('../controller/controllerFactory');
 const workout = require('../controller/workoutController');
+const exercises = require('../controller/exerciseController');
 
 const router = express.Router();
 
 //workouts
-router.get('/workout', workout.getWorkout);
-router.post('/workout', workout.postWorkout);
+router.get('/workout', res(workout.getWorkout));
+router.post('/workout', res(workout.postWorkout));
+
+//exercises
+router.get('/exercises', res(exercises.getExercises));
+router.post('/exercises', res());
+router.put('/exercises', res());
 
 module.exports = router;

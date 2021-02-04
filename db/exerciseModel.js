@@ -6,7 +6,10 @@ const exerciseSchema = new Schema({
     type: String,
     unique: true,
   },
-  tags: [String],
+  tags: {
+    type: [String],
+    required: true
+  },
   url: String,
   description: String,
 });

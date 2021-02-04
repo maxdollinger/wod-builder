@@ -1,0 +1,61 @@
+{
+     "name": "Cindy",
+     "type": "amrap",
+     "time": [
+         1200
+     ],
+     "rest": [],
+     "sections": [],
+     "scheme": [],
+     "description": "",
+     "exercises": [
+         [
+             {
+                 "_id": "60184ce5492d591f6ca75ddb",
+                 "tags": [
+                     "bar",
+                     "arms",
+                     "shoulders",
+                     "grip",
+                     "upperback",
+                     "lvl2",
+                     "gymnastic"
+                 ],
+                 "name": "Pull-up",
+                 "description": "Any-Style",
+                 "reps": [5]
+             },
+             {
+                 "_id": "601727f94b36340c3cbcd0f9",
+                 "tags": [
+                     "gymnastic",
+                     "push",
+                     "lvl2",
+                     "",
+                     "arms",
+                     "shoulders",
+                     "core"
+                 ],
+                 "name": "Push-up",
+                 "url": "https://www.youtube.com/embed/_l3ySVKYVJ8",
+                 "description": "",
+                 "reps": [10]
+             },
+             {
+                 "_id": "60183e42492d591f6ca75dd9",
+                 "tags": [
+                     "gymnastic",
+                     "lvl1",
+                     "legs",
+                     "hip",
+                     "none",
+                     "core"
+                 ],
+                 "name": "Air-Squat",
+                 "description": "",
+                 "url": "",
+                 "reps": [15]
+             }
+         ]
+     ]
+ }
