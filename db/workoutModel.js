@@ -13,7 +13,7 @@ const workoutSchema = new Schema({
   sections: [Number],
   scheme: [Number],
   description: String,
-  exercises: [[{}]],
+  exercises: [{}],
   numberExercises: Number
 });
 

@@ -1,5 +1,6 @@
 const { pipe } = require('../utils/utils');
 const arrUtils = require('../utils/arrUtils');
+const configs = require('../utils/configs');
 
 const createTagsArr = exercises => {
      return exercises.flat().map(el => el.tags).flat();
@@ -8,14 +9,15 @@ const createTagsArr = exercises => {
 const eliminateLowerLevels = arrUtils.eliminateItemsWithLowerRank(['lvl3','lvl2','lvl1'])
 
 const exerciseTags = ({ exercises }) => {
-     const allExercises = exercises.flat();
+     const equipmentTags = configs('equipment', 'value').filter( el => el !== 'none');
 
      return pipe(
           createTagsArr,
           arrUtils.filterDuplicates,
           eliminateLowerLevels,
           arrUtils.eliminateFalsyItems,
-     )(allExercises)
+          arrUtils.eliminateItemIfValuesIncluded('none', equipmentTags),
+     )(exercises)
 }
 
 const durationTag = (workout) => {

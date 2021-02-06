@@ -3,7 +3,8 @@ const createExerciseString = exercise => {
      [{ prop: 'reps', unit: '' },
      { prop: 'time', unit: 's' },
      { prop: 'distance', unit: 'm' },
-     { prop: 'cal', unit: 'cal' }].forEach(el => {
+     { prop: 'cal', unit: 'cal' },
+     { prop: 'max', unit: '' }].forEach(el => {
           if (exercise[el.prop]?.length > 0) {
                string += exercise[el.prop][0];
                exercise[el.prop][1] && (string += '/' + exercise[el.prop][1]);
@@ -23,10 +24,10 @@ const createExerciseString = exercise => {
      return string;
 }
 
-const createExercisesText = ({exercises}, index = 0) => {
+const createExercisesText = ({exercises}) => {
      let string = '';
 
-     exercises[index].forEach( exc => string += `${createExerciseString(exc)}\n`)
+     exercises.forEach( exc => string += `${createExerciseString(exc)}\n`)
 
      return string.trim();
 }

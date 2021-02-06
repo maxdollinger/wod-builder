@@ -21,12 +21,6 @@ const apiRouter = require('./router/apiRouter');
 //API Endpoint
 app.use('/api', apiRouter);
 
-//Server ReactApp
-app.use((req, res, next) => {
-     // res.sendFile(`${__dirname}/public/index.html`);
-     res.send('hello')
-})
-
 //start server
 const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Server startet on port ${port}...`));
