@@ -6,7 +6,7 @@ const workoutSchema = new Schema({
     type: String,
     unique: true,
   },
-  type: String,
+  style: String,
   tags: [String],
   time: [Number],
   rest: [Number],
@@ -14,7 +14,6 @@ const workoutSchema = new Schema({
   scheme: [Number],
   description: String,
   exercises: [{}],
-  numberExercises: Number
 });
 
 const Workout = mongoose.model('Workout', workoutSchema);

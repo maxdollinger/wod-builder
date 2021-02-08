@@ -7,7 +7,7 @@ const config = require('../controller/configController');
 const router = express.Router();
 
 //workouts
-router.get('/workout/random', res(workout.getRandomWorkout));
+router.get('/workout', res(workout.getWorkout));
 // router.post('/workout', res(workout.postWorkout));
 
 //exercises
@@ -16,6 +16,6 @@ router.get('/workout/random', res(workout.getRandomWorkout));
 // router.put('/exercises', res());
 
 //configs
-// router.get('/configs', config.getConfigs);
+router.get('/configs', config.getConfigs);
 
 module.exports = router;

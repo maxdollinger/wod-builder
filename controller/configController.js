@@ -1,5 +1,5 @@
-const configs = require('../utils/configs');
+const { configs } = require('../utils/configs');
 
 exports.getConfigs = (req, res, next) => {
-     res.json(configs(req.query.config))
+     res.json({ status: 'success', msg: 'Configs for wodbuilder', data: configs(req.query.config) })
 }

@@ -19,42 +19,49 @@ const filters = () => {
           { name: "Core", value: "core" },
           { name: "Legs", value: "legs" },
      ];
+     
      const equipment = [
           { name: "Bar", value: "bar" },
           { name: "Barbell", value: "barbell" },
           { name: "Kettlebell", value: "kettlebell" },
           { name: "Rings", value: "rings" },
           { name: "Dumbbell", value: "dumbbell" },
-          { name: "Jump rope", value: "jumvaluee" },
+          { name: "Jump rope", value: "jumprope" },
           { name: "Box", value: "box" },
-          { name: "Med Ball", value: "medball"},
-          { name: "Rower", value: "rower"},
-          { name: "Concep2 Bike", value: "c2bike"},
-          { name: "Assault Bike", value: "assbike"},
-          { name: "Skie Erg", value: "skierg"},
+          { name: "Med Ball", value: "medball" },
+          { name: "Rower", value: "rower" },
+          { name: "Concep2 Bike", value: "c2bike" },
+          { name: "Assault Bike", value: "assbike" },
+          { name: "Skie Erg", value: "skierg" },
      ];
 
      const exerciseProps = [
-          {name: 'Reps', value: 'reps', unit: 'reps'},
-          {name: 'Cal', value: 'cal', unit: 'cal'},
-          {name: 'Weight', value: 'weight', unit: 'Kg'},
-          {name: 'Distance', value: 'distance', unit: 'm'},
-          {name: 'Height', value: 'height', unit: 'cm'},
-          {name: 'Time', value: 'time', unit: 's'},
+          { name: 'Reps', value: 'reps', unit: 'reps' },
+          { name: 'Cal', value: 'cal', unit: 'cal' },
+          { name: 'Weight', value: 'weight', unit: 'Kg' },
+          { name: 'Distance', value: 'distance', unit: 'm' },
+          { name: 'Height', value: 'height', unit: 'cm' },
+          { name: 'Time', value: 'time', unit: 's' },
      ];
 
      const exerciseMaxValues = ['', 'set', 'reps', 'distance', 'height', 'weight', 'cal']
 
      const workoutStyle = [
-          { name: "Amrap", value: 'amrap'},
-          { name: "For time", value: 'ft'},
-          { name: "Emom", value: 'emom'},
-          { name: "Rounds for time", value: 'rft'},
+          { name: "Amrap", value: 'amrap' },
+          { name: "For time", value: 'ft' },
+          { name: "Emom", value: 'emom' },
+          { name: "Rounds for time", value: 'rft' },
      ]
 
      const workoutTags = [
-          { name: "Girl", value: 'girl'},
-          { name: "Hero", value: 'hero'},
+          { name: "Girl", value: 'girl' },
+          { name: "Hero", value: 'hero' },
+     ]
+
+     const workoutDuration = [
+          { name: 'Short', value: 'short' },
+          { name: 'Medium', value: 'medium' },
+          { name: 'Long', value: 'long' },
      ]
 
      return {
@@ -65,25 +72,15 @@ const filters = () => {
           workoutStyle,
           workoutTags,
           exerciseProps,
-          exerciseMaxValues
+          exerciseMaxValues,
+          workoutDuration
      };
 }
 
-const workouts = () => {
-     const input = (name, label, type = "number") => ({ name, label, type })
+exports.tagsInFilter = filter => group => this.configs(group, 'value').filter( el => filter.includes(el));
+exports.tagsNotInFilter = filter => group => this.configs(group, 'value').filter( el => !filter.includes(el));
 
-     const duration = input("duration", "duration in min");
-     const numberRounds = input("numberRounds", "number of rounds");
-
-     return {
-          amrap: [duration],
-          forTime: [duration],
-          roundsForTime: [duration, numberRounds],
-          emom: [numberRounds],
-     };
-}
-
-module.exports = (group, value) => {
-     const config = filters()[group];
-     return value ? config.map( el => el[value]) : config;
+exports.configs = (group, value) => {
+     const config = group ? filters()[group] : filters();
+     return value ? config.map(el => el[value]) : config;
 }
