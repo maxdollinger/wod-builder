@@ -1,5 +1,5 @@
 const express = require('express');
-const {res} = require('../controller/controllerFactory');
+const responseFactory = require('../controller/responseFactory');
 const workout = require('../controller/workoutController');
 const exercises = require('../controller/exerciseController');
 const config = require('../controller/configController');
@@ -7,13 +7,13 @@ const config = require('../controller/configController');
 const router = express.Router();
 
 //workouts
-router.get('/workout', res(workout.getWorkout));
-// router.post('/workout', res(workout.postWorkout));
+router.get('/workout', responseFactory(workout.getWorkout));
+// router.post('/workout', responseFactory(workout.postWorkout));
 
 //exercises
-// router.get('/exercises', res(exercises.getExercises));
-// router.post('/exercises', res());
-// router.put('/exercises', res());
+// router.get('/exercises', responseFactory(exercises.getExercises));
+// router.post('/exercises', responseFactory());
+// router.put('/exercises', responseFactory());
 
 //configs
 router.get('/configs', config.getConfigs);
