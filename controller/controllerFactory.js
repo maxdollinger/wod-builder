@@ -1,4 +1,4 @@
-const db = require('../db/dbFactory');
+const db = require('../db/dbOperations');
 
 const setModel = (req, res, next) => {
      req.path.includes('workout') && (req.model = 'Workout');
@@ -31,8 +31,8 @@ const response = (req, res, next) => {
 }
 
 exports.res = (middleware) => async (req, res, next) => {
-     setModel(req, res, next);
-     setOperation(req, res, next);
+     setModel(req);
+     setOperation(req);
 
      middleware && await middleware(req, res, next);
 

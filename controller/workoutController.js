@@ -1,4 +1,4 @@
-const workoutDB = require('../db/dbFactory')('Workout');
+const workoutDB = require('../db/dbOperations')('Workout');
 const workoutText = require('../workouts/workoutText');
 const workoutTags = require('../workouts/workoutTags');
 const buildWorkout = require('../workouts/buildWorkout');
