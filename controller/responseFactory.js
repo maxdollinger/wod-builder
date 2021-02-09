@@ -28,12 +28,14 @@ const response = (req, res, next) => {
 
      db(model)(operation)(req.body)
           .then(docs => {
+               if(docs.length === 0) throw new Error('no matches found');
+
                const defaultSuccess = ({ status: 'success', msg: `${req.method} ${model}`, data: docs });
                const response = success instanceof Function ? success(docs) : {};
                res.status(200).json({ ...defaultSuccess, ...response })
           })
           .catch(err => {
-               res.status(500).json({ status: 'error', msg: err.message, data: err })
+               res.status(400).json({ status: 'error', msg: err.message, data: err })
           })
 }
 

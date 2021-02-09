@@ -11,18 +11,19 @@ const createExercises = (filter, workouts) => {
           .shuffle()
           .uniqBy('name')
           .filter(el => _.isEmpty(_.intersection(el.tags, equipmentTags.nin)))
+          .tap(exercises => { if (_.isEmpty(exercises)) throw new Error('no matching exercises') })
           .slice(0, _.size(_.sample(workouts).exercises))
           .value()
 }
 
 module.exports = (workouts, filter = []) => {
-     if(_.isEmpty(workouts)) return new Error('no workouts found');
+     if (_.isEmpty(workouts)) return null;
 
      return _.chain(workouts)
           .sample()
-          .set('exercises', createExercises(filter, workouts))
           .set('name', '')
-          .tap(workout =>  workout.tags = workoutTags(workout))
-          .thru(workout => _.isEmpty(workout.exercises) ? new Error() : workout)
+          .set('exercises', createExercises(filter, workouts))
+          .tap(workout => workout.numberExercises = _.size(workout.exercises))
+          .tap(workout => workout.tags = workoutTags(workout))
           .value();
 }
