@@ -1,39 +1,28 @@
-const { getRandomEntrie, shuffleArr } = require('../utils/arrUtils');
-const { tagsNotInFilter } = require('../utils/configs');
-const { pipe, pipeFlatMap, pipeFilter } = require('../utils/utils');
+const _ = require('lodash');
+const { tagsByGroup } = require('../utils/configs');
 const workoutTags = require('./workoutTags');
 
-const filteredExercisesArr = (filter, workouts) => {
-     filter = filter || [];
+const createExercises = (filter, workouts) => {
+     const equipmentTags = tagsByGroup(filter)('equipment');
 
-     const notIn = tagsNotInFilter(filter)('equipment');
-
-     return pipe(
-          pipeFlatMap(el => el.exercises),
-          pipeFilter(el => !el.tags.some(tag => notIn.includes(tag))),
-          shuffleArr,
-     )(workouts)
+     return _
+          .chain(workouts)
+          .flatMap(el => el.exercises)
+          .shuffle()
+          .uniqBy('name')
+          .filter(el => _.isEmpty(_.intersection(el.tags, equipmentTags.nin)))
+          .slice(0, _.size(_.sample(workouts).exercises))
+          .value()
 }
 
-const uniqueExercises = (number, exercises, arr = []) => {
-     if (arr.length >= number || exercises.length === 0) return arr;
+module.exports = (workouts, filter = []) => {
+     if(_.isEmpty(workouts)) return new Error('no workouts found');
 
-     if (!arr.some(el => el.name === exercises[0].name)) arr.push(exercises[0]);
-
-     return uniqueExercises(number, exercises.slice(1), arr);
-}
-
-module.exports = filter => workouts => {
-
-     const workout = getRandomEntrie(workouts);
-     const exercises = filteredExercisesArr(filter, workouts);
-
-     if (!workout || exercises.length === 0) return null;
-
-     return {
-          ...workout,
-          name: '',
-          exercises: uniqueExercises(workout.exercises.length, exercises),
-          tags: workoutTags(workout),
-     }
+     return _.chain(workouts)
+          .sample()
+          .set('exercises', createExercises(filter, workouts))
+          .set('name', '')
+          .tap(workout =>  workout.tags = workoutTags(workout))
+          .thru(workout => _.isEmpty(workout.exercises) ? new Error() : workout)
+          .value();
 }

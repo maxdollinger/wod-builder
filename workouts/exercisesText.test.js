@@ -1,7 +1,7 @@
 const excText = require('./exercisesText');
 
-const exercises = [
-     [{
+const exercises =[
+     {
           name: 'Pull-up',
           reps: [20],
           tags: ['arms', 'lvl2', 'gymnastic']
@@ -23,7 +23,6 @@ const exercises = [
           cal: [15,10],
           tags: ['lvl1', 'cardio', 'rower']
      },
-     ]
 ];
 
 const workout = {

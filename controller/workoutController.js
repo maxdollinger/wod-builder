@@ -4,12 +4,11 @@ const buildWorkout = require('../workouts/buildWorkout');
 
 exports.getWorkout = (req, res, next) => {
      req.success = workouts => {
-          const workout = buildWorkout(req.query.filter)(workouts);
-
-          if (workout) {
-               return {data: workoutText(workout) }
-          } else {
-               return {status: 'error', msg: 'Could not build workout', data: {} }
+          try {
+               const workout = buildWorkout(workouts, req.query.filter);
+               return { data: workoutText(workout) };
+          } catch(err) {
+               return {status: 'error', msg: 'no matching workout or exercise' , data: {}}
           }
      }
 }

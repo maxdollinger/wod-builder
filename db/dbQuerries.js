@@ -1,23 +1,24 @@
-const { getRandomEntrie } = require('../utils/arrUtils');
-const { tagsInFilter } = require('../utils/configs');
+const _ = require('lodash');
+const { tagsByGroup } = require('../utils/configs');
 
-const setTags = (arr, randomValueArr) => arr.length === 0 ? [getRandomEntrie(randomValueArr)] : arr;
+const getTagsFactory = filter => group => {
+     const tags = tagsByGroup(filter)(group);
+     return _.isEmpty(tags.in) ? [_.sample(tags.nin)] : tags.in;
+}
 
 const workoutQuery = query => {
      const filter = query.filter || [];
 
-     const getTags = tagsInFilter(filter);
-     const styles = setTags(getTags('workoutStyle'), ['amrap', 'rft', 'ft']);
-     const durations = setTags(getTags('workoutDuration'), ['short', 'medium', 'long']);
+     const getTags = getTagsFactory(filter);
 
      return {
-          type: { $in: styles },
-          tags: { $in: durations }
+          type: { $in: getTags('style') },
+          tags: { $in: getTags('duration') }
      }
 }
 
 const exerciseQuery = query => {
-     const {name} = query;
+     const { name } = query;
 
      const filter = {};
 

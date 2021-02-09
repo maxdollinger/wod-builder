@@ -1,12 +1,12 @@
 const db = require('../db/dbOperations');
 const createQuery = require('../db/dbQuerries');
 
-const setModel = (req, res, next) => {
+const setModel = req => {
      req.path.includes('workout') && (req.model = 'Workout');
      req.path.includes('exercise') && (req.model = 'Exercise');
 }
 
-const setOperation = (req, res, next) => {
+const setOperation = req => {
      const operations = {
           GET: 'find',
           POST: 'create',
@@ -15,6 +15,12 @@ const setOperation = (req, res, next) => {
      }
 
      req.operation = operations[req.method];
+}
+
+const setQuery = req => {
+     if (req.method === 'GET') {
+          req.body = createQuery(req.model)(req.query)
+     }
 }
 
 const response = (req, res, next) => {
@@ -27,15 +33,18 @@ const response = (req, res, next) => {
                res.status(200).json({ ...defaultSuccess, ...response })
           })
           .catch(err => {
-               res.status(500).json({ status: 'error', msg: err.massage, data: err })
+               res.status(500).json({ status: 'error', msg: err.message, data: err })
           })
 }
 
 module.exports = middleware => async (req, res, next) => {
      setModel(req);
      setOperation(req);
-     req.operation === 'find' && (req.body = createQuery(req.model)(req.query));
-     middleware && await middleware(req, res, next);
+     setQuery(req);
+
+     if (middleware instanceof Function) {
+          await middleware(req, res, next)
+     }
 
      !res.headersSent && response(req, res, next);
 }

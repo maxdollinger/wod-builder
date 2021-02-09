@@ -1,26 +1,32 @@
-const { pipe } = require('../utils/utils');
-const arrUtils = require('../utils/arrUtils');
+const _ = require('lodash');
 
-const createTagsArr = exercises => exercises.flatMap(el => el.tags);
+const removeLevelTags = tags => {
+     const rankedLevels = ['lvl3', 'lvl2', 'lvl1'];
 
-const eliminateLowerLevels = arrUtils.eliminateItemsWithLowerRank(['lvl3', 'lvl2', 'lvl1'])
+     const remove = (function filter(level) {
+          return (_.isEmpty(level) || tags.includes(level[0])) ?
+               level.slice(1) : filter(level.slice(1));
+     })(rankedLevels)
 
-const exerciseTags = ({ exercises }) => pipe(
-     createTagsArr,
-     arrUtils.filterDuplicates,
-     eliminateLowerLevels,
-     arrUtils.eliminateFalsyItems,
-)(exercises);
+     return _.filter(tags, tag => !remove.includes(tag))
+}
+
+const exerciseTags = ({ exercises }) => _.chain(exercises)
+     .flatMap(exc => exc.tags)
+     .compact()
+     .uniq()
+     .thru(removeLevelTags)
+     .value()
 
 const durationTag = (workout) => {
      let duration = 0;
      timeBased = ['amrap', 'emom']
 
-     if(timeBased.includes(workout.tyep)) {
-          duration += arrUtils.sumArr(workout.time, workout.rest);
-          duration = duration * (arrUtils.sumArr(workout.sections) || 1);
+     if (timeBased.includes(workout.type)) {
+          duration = _.sum(workout.time) + _.sum(workout.rest);
+          duration = duration * (_.sum(workout.sections) || 1);
      } else {
-          duration = workout.time[0]
+          duration = _.sum(workout.time);
      }
 
      if (duration <= 480) {

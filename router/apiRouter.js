@@ -11,7 +11,7 @@ router.get('/workout', responseFactory(workout.getWorkout));
 // router.post('/workout', responseFactory(workout.postWorkout));
 
 //exercises
-// router.get('/exercises', responseFactory(exercises.getExercises));
+router.get('/exercises', responseFactory(exercises.getExercises));
 // router.post('/exercises', responseFactory());
 // router.put('/exercises', responseFactory());
 

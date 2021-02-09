@@ -1,4 +1,6 @@
-const filters = () => {
+const _ = require('lodash');
+
+const configData = () => {
      const type = [
           { name: "Gymnastic", value: "gymnastic" },
           { name: "Cardio", value: "cardio" },
@@ -46,7 +48,7 @@ const filters = () => {
 
      const exerciseMaxValues = ['', 'set', 'reps', 'distance', 'height', 'weight', 'cal']
 
-     const workoutStyle = [
+     const style = [
           { name: "Amrap", value: 'amrap' },
           { name: "For time", value: 'ft' },
           { name: "Emom", value: 'emom' },
@@ -58,7 +60,7 @@ const filters = () => {
           { name: "Hero", value: 'hero' },
      ]
 
-     const workoutDuration = [
+     const duration = [
           { name: 'Short', value: 'short' },
           { name: 'Medium', value: 'medium' },
           { name: 'Long', value: 'long' },
@@ -69,18 +71,20 @@ const filters = () => {
           level,
           focus,
           equipment,
-          workoutStyle,
+          style,
           workoutTags,
           exerciseProps,
           exerciseMaxValues,
-          workoutDuration
+          duration
      };
 }
 
-exports.tagsInFilter = filter => group => this.configs(group, 'value').filter( el => filter.includes(el));
-exports.tagsNotInFilter = filter => group => this.configs(group, 'value').filter( el => !filter.includes(el));
+exports.tagsByGroup = filter => group => ({
+     in: _.intersection(this.configs(group, 'value'), filter),
+     nin: _.difference(this.configs(group, 'value'), filter)
+});
 
 exports.configs = (group, value) => {
-     const config = group ? filters()[group] : filters();
+     const config = group ? configData()[group] : configData();
      return value ? config.map(el => el[value]) : config;
 }

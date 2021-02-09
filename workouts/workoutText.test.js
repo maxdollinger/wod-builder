@@ -9,7 +9,7 @@ const workout = {
      scheme: [],
      rest: [],
      exercises: [
-          [{
+          {
                name: 'Pull-up',
                reps: [5],
                height: [],
@@ -27,7 +27,6 @@ const workout = {
                cal: [],
                tags: ['lvl1', 'gymnastic', 'legs']
           }
-          ]
      ]
 }
 

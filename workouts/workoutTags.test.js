@@ -1,14 +1,14 @@
 const workoutTags = require('./workoutTags');
 const workout = {
      name: '',
-     type: '',
+     type: 'emom',
      tags: [],
      time: [1200],
      section: [],
      scheme: [],
      rest: [],
      exercises: [
-          [{
+          {
                name: 'Pull-up',
                reps: [20],
                tags: ['arms', 'lvl2', 'gymnastic']
@@ -30,21 +30,20 @@ const workout = {
                cal: [15,10],
                tags: ['lvl1', 'cardio', 'rower']
           },
-          ]
      ]
 }
 
 test('should return tags for workout', () => {
      const tags = workoutTags(workout);
-     expect(tags).toEqual(['arms', 'lvl2', 'gymnastic', 'weightlifting', 'box', 'cardio', 'rower', 'medium']);
+     expect(tags).toEqual(['arms', 'lvl2', 'gymnastic', 'weightlifting', 'box', 'cardio', 'rower', 'medium', 'emom']);
 })
 
 test('should return tags for workout', () => {
-     const tags = workoutTags({...workout, time:[180,180], rest:[60,0]});
-     expect(tags).toEqual(['arms', 'lvl2', 'gymnastic', 'weightlifting', 'box', 'cardio', 'rower', 'short']);
+     const tags = workoutTags({...workout, type: 'amrap', time:[180,180], rest:[60,0]});
+     expect(tags).toEqual(['arms', 'lvl2', 'gymnastic', 'weightlifting', 'box', 'cardio', 'rower', 'short', 'amrap']);
 })
 
 test('should return tags for workout', () => {
-     const tags = workoutTags({...workout, time:[180,180], rest:[60,0], sections:[4,2]});
-     expect(tags).toEqual(['arms', 'lvl2', 'gymnastic', 'weightlifting', 'box', 'cardio', 'rower', 'long']);
+     const tags = workoutTags({...workout, type: 'rft', time:[900], rest:[60,0], sections:[4,2]});
+     expect(tags).toEqual(['arms', 'lvl2', 'gymnastic', 'weightlifting', 'box', 'cardio', 'rower', 'medium', 'rft']);
 })
