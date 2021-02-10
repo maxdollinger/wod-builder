@@ -7,16 +7,29 @@ const app = express();
 app.set('trust proxy', true);
 const cors = require('cors');
 app.use(cors());
-const helmet = require('helmet');
-app.use(helmet());
 const rateLimit = require('express-rate-limit')({
      windowMs: 20 * 60 * 1000,
      max: 100
 });
 
+//helmet
+const helmet = require('helmet');
+app.use((req, res, next) => {
+     res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
+     next();
+});
+app.use(helmet({
+     contentSecurityPolicy: {
+          directives: {
+               ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+               scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`],
+          },
+     }
+}));
+
 //Global Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 //Connect to DB
