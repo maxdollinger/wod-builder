@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-const crypto = require('crypto');
 const express = require('express');
 const app = express();
 
@@ -15,10 +14,6 @@ const rateLimit = require('express-rate-limit')({
 
 //helmet
 const helmet = require('helmet');
-app.use((req, res, next) => {
-     res.locals.cspNonce = crypto.randomBytes(16).toString("hex");
-     next();
-});
 app.use(helmet({
      contentSecurityPolicy: false
 }));
