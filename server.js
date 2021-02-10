@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const crypto = require('crypto');
 const express = require('express');
 const app = express();
 
@@ -19,12 +20,7 @@ app.use((req, res, next) => {
      next();
 });
 app.use(helmet({
-     contentSecurityPolicy: {
-          directives: {
-               ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-               scriptSrc: ["'self'", (req, res) => `'nonce-${res.locals.cspNonce}'`],
-          },
-     }
+     contentSecurityPolicy: false
 }));
 
 //Global Middleware
