@@ -4,8 +4,15 @@ const express = require('express');
 const app = express();
 
 //Security
+app.set('trust proxy', true);
 const cors = require('cors');
 app.use(cors());
+const helmet = require('helmet');
+app.use(helmet());
+const rateLimit = require('express-rate-limit')({
+     windowMs: 20 * 60 * 1000,
+     max: 100
+});
 
 //Global Middleware
 app.use(express.json());
@@ -19,6 +26,7 @@ const db = require('./db/dbConnection');
 const apiRouter = require('./router/apiRouter');
 
 //API Endpoint
+app.use('/api', rateLimit)
 app.use('/api', apiRouter);
 
 //start server

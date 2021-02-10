@@ -35,7 +35,7 @@ const response = (req, res, next) => {
                res.status(200).json({ ...defaultSuccess, ...response })
           })
           .catch(err => {
-               res.status(400).json({ status: 'error', msg: err.message, data: err })
+               res.status(404).json({ status: 'error', msg: err.message, data: err })
           })
 }
 
